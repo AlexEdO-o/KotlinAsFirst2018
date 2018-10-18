@@ -1,4 +1,5 @@
 @file:Suppress("UNUSED_PARAMETER")
+
 package lesson3.task1
 
 import kotlin.math.sqrt
@@ -11,13 +12,14 @@ import kotlin.math.sqrt
 fun factorial(n: Int): Double {
     var result = 1.0
     for (i in 1..n) {
-        result = result * i // Please do not fix in master
+        result *= i // Please do not fix in master
     }
     return result
 }
 
 /**
  * Пример
+ *
  *
  * Проверка числа на простоту -- результат true, если число простое
  */
@@ -38,7 +40,7 @@ fun isPrime(n: Int): Boolean {
  */
 fun isPerfect(n: Int): Boolean {
     var sum = 1
-    for (m in 2..n/2) {
+    for (m in 2..n / 2) {
         if (n % m > 0) continue
         sum += m
         if (sum > n) break
@@ -66,7 +68,18 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun digitNumber(n: Int): Int = TODO()
+fun digitNumber(n: Int): Int {
+    var number = n
+    var count = 0
+    if (n == 0)
+        return 1
+    while (number > 0) {
+        number /= 10
+        count++
+
+    }
+    return count
+}
 
 /**
  * Простая
@@ -74,7 +87,17 @@ fun digitNumber(n: Int): Int = TODO()
  * Найти число Фибоначчи из ряда 1, 1, 2, 3, 5, 8, 13, 21, ... с номером n.
  * Ряд Фибоначчи определён следующим образом: fib(1) = 1, fib(2) = 1, fib(n+2) = fib(n) + fib(n+1)
  */
-fun fib(n: Int): Int = TODO()
+fun fib(n: Int): Int {
+    var fibFir = 0
+    var fibSec = 1
+    var fib = fibSec
+    for (i in 2..n) {
+        fibSec += fibFir
+        fibFir = fib
+        fib = fibSec
+    }
+    return fibSec
+}
 
 /**
  * Простая
@@ -83,7 +106,6 @@ fun fib(n: Int): Int = TODO()
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int = TODO()
-
 /**
  * Простая
  *
@@ -132,7 +154,18 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * Написать функцию, которая находит, сколько шагов требуется для
  * этого для какого-либо начального X > 0.
  */
-fun collatzSteps(x: Int): Int = TODO()
+fun collatzSteps(x: Int): Int {
+    var X = x
+    var step = 0
+    while (X != 1) {
+        step++
+        if (X % 2 == 0)
+            X /= 2
+        else
+            X = 3 * X + 1
+    }
+    return step
+}
 
 /**
  * Средняя
@@ -142,6 +175,7 @@ fun collatzSteps(x: Int): Int = TODO()
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
 fun sin(x: Double, eps: Double): Double = TODO()
+
 
 /**
  * Средняя
@@ -159,7 +193,16 @@ fun cos(x: Double, eps: Double): Double = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun revert(n: Int): Int = TODO()
+fun revert(n: Int): Int {
+    var N = n
+    var revert = 0
+    while (N > 0) {
+        revert = revert * 10 + N % 10
+        N /= 10
+    }
+    return revert
+}
+
 
 /**
  * Средняя
@@ -170,7 +213,10 @@ fun revert(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun isPalindrome(n: Int): Boolean = TODO()
+fun isPalindrome(n: Int): Boolean {
+    val N = n
+    return n == revert(N)
+}
 
 /**
  * Средняя

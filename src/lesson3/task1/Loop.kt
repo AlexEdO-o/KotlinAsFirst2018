@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import kotlin.math.abs
 import kotlin.math.sqrt
 
 /**
@@ -69,7 +70,7 @@ fun digitCountInNumber(n: Int, m: Int): Int =
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun digitNumber(n: Int): Int {
-    var number = n
+    var number = abs(n)
     var count = 0
     if (n == 0)
         return 1
@@ -155,14 +156,14 @@ fun squareBetweenExists(m: Int, n: Int): Boolean = TODO()
  * этого для какого-либо начального X > 0.
  */
 fun collatzSteps(x: Int): Int {
-    var X = x
+    var xx = x
     var step = 0
-    while (X != 1) {
+    while (xx != 1) {
         step++
-        if (X % 2 == 0)
-            X /= 2
+        if (xx % 2 == 0)
+            xx /= 2
         else
-            X = 3 * X + 1
+            xx = 3 * xx + 1
     }
     return step
 }
@@ -194,11 +195,11 @@ fun cos(x: Double, eps: Double): Double = TODO()
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun revert(n: Int): Int {
-    var N = n
+    var nn = n
     var revert = 0
-    while (N > 0) {
-        revert = revert * 10 + N % 10
-        N /= 10
+    while (nn > 0) {
+        revert = revert * 10 + nn % 10
+        nn /= 10
     }
     return revert
 }
@@ -214,8 +215,7 @@ fun revert(n: Int): Int {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun isPalindrome(n: Int): Boolean {
-    val N = n
-    return n == revert(N)
+    return n == revert(n)
 }
 
 /**
@@ -227,15 +227,15 @@ fun isPalindrome(n: Int): Boolean {
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var N = n
+    var nn = n
     var n1 = n
     var n2 = n
-    while (N > 0 && n1 == n2) {
-        n1 = N % 10
-        N /= 10
-        n2 = N % 10
+    while (nn > 0 && n1 == n2) {
+        n1 = nn % 10
+        nn /= 10
+        n2 = nn % 10
     }
-    return N == 0
+    return nn == 0
 }
 
 /**

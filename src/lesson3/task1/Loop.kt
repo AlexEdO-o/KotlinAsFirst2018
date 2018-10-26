@@ -2,6 +2,7 @@
 
 package lesson3.task1
 
+import java.lang.Math.pow
 import kotlin.math.abs
 import kotlin.math.sqrt
 
@@ -74,7 +75,7 @@ fun digitNumber(n: Int): Int {
     var count = 0
     if (n == 0)
         return 1
-    while (number > 0) {
+    while (number >  0) {
         number /= 10
         count++
 
@@ -175,7 +176,21 @@ fun collatzSteps(x: Int): Int {
  * sin(x) = x - x^3 / 3! + x^5 / 5! - x^7 / 7! + ...
  * Нужную точность считать достигнутой, если очередной член ряда меньше eps по модулю
  */
-fun sin(x: Double, eps: Double): Double = TODO()
+fun sin(x: Double, eps: Double): Double {
+    val unit = x % (Math.PI * 2)
+    var fact = 1
+    var wop = 1.0
+    var befr = 1
+    var sum = 0.0
+    while (abs(pow(unit, wop) / factorial(fact)) >= eps) {
+        sum += befr * pow(unit, wop) / factorial(fact)
+        befr *= -1
+        wop += 2
+        fact += 2
+    }
+    return sum
+}
+
 
 
 /**

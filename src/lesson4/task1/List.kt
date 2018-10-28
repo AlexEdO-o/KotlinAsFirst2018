@@ -209,7 +209,7 @@ fun factorize(n: Int): List<Int> {
     val list = mutableListOf<Int>()
     while (nn != 1) {
         var count = 2
-        while(nn % count != 0) count++
+        while (nn % count != 0) count++
         list.add(count)
         nn /= count
     }
@@ -236,7 +236,7 @@ fun convert(n: Int, base: Int): List<Int> {
     var nn = n
     val list = mutableListOf<Int>()
     while (nn != 0) {
-        list.add(0,nn % base)
+        list.add(0, nn % base)
         nn /= base
     }
     return list
@@ -250,7 +250,7 @@ fun convert(n: Int, base: Int): List<Int> {
  * строчными буквами: 10 -> a, 11 -> b, 12 -> c и так далее.
  * Например: n = 100, base = 4 -> 1210, n = 250, base = 14 -> 13c
  */
-fun convertToString(n: Int, base: Int): String =  convert(n, base).joinToString(
+fun convertToString(n: Int, base: Int): String = convert(n, base).joinToString(
         separator = "",
         transform = { if (it > 9) ('a' + it - 10).toString() else "$it" }
 )
@@ -300,8 +300,20 @@ fun decimalFromString(str: String, base: Int): Int {
  * 90 = XC, 100 = C, 400 = CD, 500 = D, 900 = CM, 1000 = M.
  * Например: 23 = XXIII, 44 = XLIV, 100 = C
  */
-fun roman(n: Int): String = TODO()
-
+fun roman(n: Int): String {
+    val romanNumb =
+            mapOf("M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100,
+                    "XC" to 90, "L" to 50, "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1)
+    var number= n
+    val list= mutableListOf<String>()
+    for ((roman, arabian) in romanNumb) {
+        while (number >= arabian) {
+            list.add(roman)
+            number -= arabian
+        }
+    }
+    return list.joinToString(separator = "")
+}
 /**
  * Очень сложная
  *

@@ -240,15 +240,19 @@ fun isPalindrome(n: Int): Boolean = n == revert(n)
  * Использовать операции со строками в этой задаче запрещается.
  */
 fun hasDifferentDigits(n: Int): Boolean {
-    var nn = n
-    var n1 = n
-    var n2 = n
-    while (nn > 0 && n1 == n2) {
-        n1 = nn % 10
-        nn /= 10
-        n2 = nn % 10
+    var last = n % 10
+    var nn = n / 10
+    if (digitNumber(n) == 1) {
+        return false
     }
-    return nn == 0
+    while (nn != 0) {
+        if (last != nn % 10) {
+            return true
+        }
+        last = nn % 10
+        nn /= 10
+    }
+    return false
 }
 
 /**

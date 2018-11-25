@@ -94,7 +94,15 @@ fun buildWordSet(text: List<String>): MutableSet<String> {
  *     mapOf("Emergency" to "911", "Police" to "02")
  *   ) -> mapOf("Emergency" to "112, 911", "Police" to "02")
  */
-fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> = TODO()
+fun mergePhoneBooks(mapA: Map<String, String>, mapB: Map<String, String>): Map<String, String> {
+    val mapC = (mapB + mapA).toMutableMap()
+    mapB.forEach {
+        val i = mapA[it.key]
+        if (i != null && it.value != i)
+            mapC[it.key] = "$i, ${it.value}"
+    }
+    return mapC
+}
 
 /**
  * Простая
@@ -118,7 +126,7 @@ fun buildGrades(grades: Map<String, Int>): Map<Int, List<String>> = TODO()
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "z", "b" to "sweet")) -> true
  *   containsIn(mapOf("a" to "z"), mapOf("a" to "zee", "b" to "sweet")) -> false
  */
-fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = TODO()
+fun containsIn(a: Map<String, String>, b: Map<String, String>): Boolean = a.all { b[it.key] == it.value }
 
 /**
  * Средняя
@@ -147,7 +155,19 @@ fun averageStockPrice(stockPrices: List<Pair<String, Double>>): Map<String, Doub
  *     "печенье"
  *   ) -> "Мария"
  */
-fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? = TODO()
+fun findCheapestStuff(stuff: Map<String, Pair<String, Double>>, kind: String): String? {
+    var count = 0
+    var cost = 0.0
+    var res: String? = null
+    stuff.forEach {
+        if (it.value.first == kind && (it.value.second < cost || count == 0)) {
+            res = it.key
+            cost = it.value.second
+            count++
+        }
+    }
+    return res
+}
 
 /**
  * Сложная
@@ -207,7 +227,9 @@ fun whoAreInBoth(a: List<String>, b: List<String>): List<String> = TODO()
  * Например:
  *   canBuildFrom(listOf('a', 'b', 'o'), "baobab") -> true
  */
-fun canBuildFrom(chars: List<Char>, word: String): Boolean = TODO()
+fun canBuildFrom(chars: List<Char>, word: String): Boolean =
+        word.toSet().all { it in chars.toSet() }
+
 
 /**
  * Средняя
@@ -225,7 +247,6 @@ fun extractRepeats(list: List<String>): Map<String, Int> = TODO()
 
 /**
  * Средняя
- *
  * Для заданного списка слов определить, содержит ли он анаграммы
  * (два слова являются анаграммами, если одно можно составить из второго)
  *
@@ -251,7 +272,13 @@ fun hasAnagrams(words: List<String>): Boolean = TODO()
  *   findSumOfTwo(listOf(1, 2, 3), 4) -> Pair(0, 2)
  *   findSumOfTwo(listOf(1, 2, 3), 6) -> Pair(-1, -1)
  */
-fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> = TODO()
+fun findSumOfTwo(list: List<Int>, number: Int): Pair<Int, Int> {
+    for (i in 0 until list.size) {
+        if (number - list[i] in list && i != list.indexOf(number - list[i]))
+            return i to list.indexOf(number - list[i])
+    }
+    return -1 to -1
+}
 
 /**
  * Очень сложная

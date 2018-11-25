@@ -2,6 +2,8 @@
 
 package lesson6.task1
 
+import lesson2.task2.daysInMonth
+
 /**
  * Пример
  *
@@ -49,12 +51,10 @@ fun main(args: Array<String>) {
         val seconds = timeStrToSeconds(line)
         if (seconds == -1) {
             println("Введённая строка $line не соответствует формату ЧЧ:ММ:СС")
-        }
-        else {
+        } else {
             println("Прошло секунд с начала суток: $seconds")
         }
-    }
-    else {
+    } else {
         println("Достигнут <конец файла> в процессе чтения строки. Программа прервана")
     }
 }
@@ -71,7 +71,26 @@ fun main(args: Array<String>) {
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30.02.2009) считается неверными
  * входными данными.
  */
-fun dateStrToDigit(str: String): String = TODO()
+
+val monthName = listOf("января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября",
+        "октября", "ноября", "декабря")
+
+
+fun dateStrToDigit(str: String): String {
+    val parts = str.split(" ")
+    val monthNum: Int
+    try {
+        if (parts.size != 3) throw Exception()
+        monthNum = monthName.indexOf(parts[1]) + 1
+        if (monthNum !in 1..12) throw Exception()
+    } catch (e: Exception) {
+        return ""
+    }
+    if (parts[0].toInt() > daysInMonth(monthNum, parts[2].toInt())) return ""
+    return String.format("%02d.%02d.%d", parts[0].toInt(), monthNum, parts[2].toInt())
+
+
+}
 
 /**
  * Средняя
@@ -83,7 +102,19 @@ fun dateStrToDigit(str: String): String = TODO()
  * Обратите внимание: некорректная с точки зрения календаря дата (например, 30 февраля 2009) считается неверными
  * входными данными.
  */
-fun dateDigitToStr(digital: String): String = TODO()
+fun dateDigitToStr(digital: String): String {
+    val parts = digital.split(".")
+    val monthNum: String
+    try {
+        if (parts.size != 3) throw Exception()
+        monthNum = monthName[parts[1].toInt() - 1]
+        if (parts[1].toInt() !in 1..12) throw Exception()
+        if (parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())) throw Exception()
+    } catch (e: Exception) {
+        return ""
+    }
+    return String.format("%d %s %d", parts[0].toInt(), monthNum, parts[2].toInt())
+}
 
 /**
  * Средняя
@@ -97,11 +128,14 @@ fun dateDigitToStr(digital: String): String = TODO()
  * Все символы в номере, кроме цифр, пробелов и +-(), считать недопустимыми.
  * При неверном формате вернуть пустую строку
  */
-fun flattenPhoneNumber(phone: String): String = TODO()
+fun flattenPhoneNumber(phone: String): String {
+    if(Regex("""^\+?([\d\-()\s])+""").matches(phone))
+        return Regex("""(\s)|(-)|(\()|(\))""").replace(phone, "")
+    if (Regex("""\d+""").matches(phone)) return phone
+return ""
+}
 
-/**
- * Средняя
- *
+/*
  * Результаты спортсмена на соревнованиях в прыжках в длину представлены строкой вида
  * "706 - % 717 % 703".
  * В строке могут присутствовать числа, черточки - и знаки процента %, разделённые пробелами;

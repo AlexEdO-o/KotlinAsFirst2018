@@ -129,10 +129,10 @@ fun dateDigitToStr(digital: String): String {
  * При неверном формате вернуть пустую строку
  */
 fun flattenPhoneNumber(phone: String): String {
-    if(Regex("""^\+?([\d\-()\s])+""").matches(phone))
+    if (Regex("""^\+?([\d\-()\s])+""").matches(phone))
         return Regex("""(\s)|(-)|(\()|(\))""").replace(phone, "")
     if (Regex("""\d+""").matches(phone)) return phone
-return ""
+    return ""
 }
 
 /*
@@ -166,7 +166,25 @@ fun bestHighJump(jumps: String): Int = TODO()
  * Вернуть значение выражения (6 для примера).
  * Про нарушении формата входной строки бросить исключение IllegalArgumentException
  */
-fun plusMinus(expression: String): Int = TODO()
+fun plusMinus(expression: String): Int {
+    try {
+        if (!Regex("""(\d+\s*[-+]\s*)+\d+""").matches(expression) || expression.isEmpty() || Regex("""([-+]\s*\d+)+""").matches(expression))
+            throw IllegalArgumentException()
+    } catch (e: Exception) {
+        return -1
+    }
+    val parts = expression.split(" ")
+    if (parts.size % 2 != 1) throw IllegalArgumentException()
+    var res = parts[0].toInt()
+    for (i in 1 until parts.size step 2) {
+        if (parts[i] == "+")
+            res += parts[i + 1].toInt()
+        if (parts[i] == "-")
+            res -= parts[i + 1].toInt()
+    }
+    return res
+}
+
 
 /**
  * Сложная
@@ -176,9 +194,17 @@ fun plusMinus(expression: String): Int = TODO()
  * Слова, отличающиеся только регистром, считать совпадающими.
  * Вернуть индекс начала первого повторяющегося слова, или -1, если повторов нет.
  * Пример: "Он пошёл в в школу" => результат 9 (индекс первого 'в')
- */
-fun firstDuplicateIndex(str: String): Int = TODO()
-
+ **/
+fun firstDuplicateIndex(str: String): Int {
+    val parts = str.toLowerCase().split(" ")
+    var res = 0
+    if (parts.isNotEmpty())
+        for (i in 0 until parts.size - 1)
+            if (parts[i] == parts[i + 1])
+                return res
+            else res += parts[i].length + 1
+    return -1
+}
 /**
  * Сложная
  *

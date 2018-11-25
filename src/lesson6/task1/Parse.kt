@@ -205,6 +205,7 @@ fun firstDuplicateIndex(str: String): Int {
             else res += parts[i].length + 1
     return -1
 }
+
 /**
  * Сложная
  *
@@ -216,10 +217,28 @@ fun firstDuplicateIndex(str: String): Int {
  * или пустую строку при нарушении формата строки.
  * Все цены должны быть больше либо равны нуля.
  */
-fun mostExpensive(description: String): String = TODO()
+fun mostExpensive(description: String): String {
+    var maxPrice = ""
+    var max = -1.0
+    var cur = listOf<String>()
+    val parts = description.split("; ")
+    try {
+        for (i in parts) {
+            cur = i.split(" ")
+            if (cur.size != 2 || cur[1].toDouble() < 0) throw NumberFormatException()
 
-/**
- * Сложная
+            if (cur[1].toDouble() > max) {
+                max = cur[1].toDouble()
+                maxPrice = cur[0]
+            }
+
+        }
+    } catch (e: NumberFormatException) {
+        return ""
+    }
+    return maxPrice
+}
+ /* Сложная
  *
  * Перевести число roman, заданное в римской системе счисления,
  * в десятичную систему и вернуть как результат.

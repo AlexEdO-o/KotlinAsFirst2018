@@ -207,8 +207,8 @@ fun accumulate(list: MutableList<Double>): MutableList<Double> {
 fun factorize(n: Int): List<Int> {
     var nn = n
     val list = mutableListOf<Int>()
+    var count = 2
     while (nn != 1) {
-        var count = 2
         while (nn % count != 0) count++
         list.add(count)
         nn /= count
@@ -235,10 +235,10 @@ fun factorizeToString(n: Int): String = factorize(n).joinToString(separator = "*
 fun convert(n: Int, base: Int): List<Int> {
     var nn = n
     val list = mutableListOf<Int>()
-    while (nn != 0) {
+    do {
         list.add(0, nn % base)
         nn /= base
-    }
+    } while (nn != 0)
     return list
 }
 
@@ -283,12 +283,10 @@ fun decimal(digits: List<Int>, base: Int): Int {
  */
 fun decimalFromString(str: String, base: Int): Int {
     var sum = 0
-    for (char in str) {
-        sum = if (char.toInt() in 97..122) sum * base + char.toInt() - 87
-        else
-            sum * base + char.toInt() - 48
-
-    }
+    for (char in str) sum =
+            if (char in 'a'..'z') sum * base + (char - 'a' + 10)
+            else
+                sum * base + (char - '0')
     return sum
 }
 
@@ -304,16 +302,18 @@ fun roman(n: Int): String {
     val romanNumb =
             mapOf("M" to 1000, "CM" to 900, "D" to 500, "CD" to 400, "C" to 100,
                     "XC" to 90, "L" to 50, "XL" to 40, "X" to 10, "IX" to 9, "V" to 5, "IV" to 4, "I" to 1)
-    var number= n
-    val list= mutableListOf<String>()
-    for ((roman, arabian) in romanNumb) {
-        while (number >= arabian) {
-            list.add(roman)
-            number -= arabian
-        }
+    var number = n
+    val list = mutableListOf<String>()
+    /*
+    Сопоставлние арабского числа с римскими из ассоциативного массива(составление римского числа)
+     */
+    for ((roman, arabian) in romanNumb) while (number >= arabian) {
+        list.add(roman)
+        number -= arabian
     }
     return list.joinToString(separator = "")
 }
+
 /**
  * Очень сложная
  *

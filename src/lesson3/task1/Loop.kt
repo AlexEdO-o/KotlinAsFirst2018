@@ -2,8 +2,11 @@
 
 package lesson3.task1
 
+import com.sun.org.apache.xalan.internal.lib.ExsltMath.power
+import lesson1.task1.sqr
 import java.lang.Math.pow
 import kotlin.math.abs
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 /**
@@ -75,7 +78,7 @@ fun digitNumber(n: Int): Int {
     var count = 0
     if (n == 0)
         return 1
-    while (number >  0) {
+    while (number > 0) {
         number /= 10
         count++
 
@@ -108,6 +111,7 @@ fun fib(n: Int): Int {
  * минимальное число k, которое делится и на m и на n без остатка
  */
 fun lcm(m: Int, n: Int): Int = TODO()
+
 /**
  * Простая
  *
@@ -192,7 +196,6 @@ fun sin(x: Double, eps: Double): Double {
 }
 
 
-
 /**
  * Средняя
  *
@@ -264,7 +267,20 @@ fun hasDifferentDigits(n: Int): Boolean {
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun squareSequenceDigit(n: Int): Int = TODO()
+fun squareSequenceDigit(n: Int): Int {
+    var len = 0
+    var sqr = 0
+    var i = 1
+    while (len < n) {
+        sqr = i * i
+        len += digitNumber(sqr)
+        i++
+    }
+
+    return results(sqr, len, n)
+}
+
+fun results(n: Int, b: Int, c: Int): Int = n / 10.0.pow(b - c.toDouble()).toInt() % 10
 
 /**
  * Сложная
@@ -275,4 +291,13 @@ fun squareSequenceDigit(n: Int): Int = TODO()
  *
  * Использовать операции со строками в этой задаче запрещается.
  */
-fun fibSequenceDigit(n: Int): Int = TODO()
+fun fibSequenceDigit(n: Int): Int {
+    var len = 0
+    var i = 0
+    while (len < n) {
+        i++
+        len += digitNumber(fib(i))
+    }
+    return results(fib(i), len, n)
+}
+

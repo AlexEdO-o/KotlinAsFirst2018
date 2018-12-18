@@ -80,10 +80,10 @@ fun dateStrToDigit(str: String): String {
     val parts = str.split(" ")
     val monthNum: Int
     try {
-        if (parts.size != 3) throw Exception()
+        if (parts.size != 3) return ""
         monthNum = monthName.indexOf(parts[1]) + 1
-        if (monthNum !in 1..12) throw Exception()
-    } catch (e: Exception) {
+        if (monthNum !in 1..12) return ""
+    } catch (e: IllegalArgumentException) {
         return ""
     }
     if (parts[0].toInt() > daysInMonth(monthNum, parts[2].toInt())) return ""
@@ -106,10 +106,10 @@ fun dateDigitToStr(digital: String): String {
     val parts = digital.split(".")
     val monthNum: String
     try {
-        if (parts.size != 3) throw Exception()
+        if (parts.size != 3) return ""
         monthNum = monthName[parts[1].toInt() - 1]
-        if (parts[1].toInt() !in 1..12) throw Exception()
-        if (parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())) throw Exception()
+        if (parts[1].toInt() !in 1..12) return ""
+        if (parts[0].toInt() > daysInMonth(parts[1].toInt(), parts[2].toInt())) return ""
     } catch (e: Exception) {
         return ""
     }
@@ -185,7 +185,6 @@ fun plusMinus(expression: String): Int {
     return res
 }
 
-
 /**
  * Сложная
  *
@@ -198,11 +197,13 @@ fun plusMinus(expression: String): Int {
 fun firstDuplicateIndex(str: String): Int {
     val parts = str.toLowerCase().split(" ")
     var res = 0
-    if (parts.isNotEmpty())
-        for (i in 0 until parts.size - 1)
+    if (parts.isNotEmpty()) {
+        for (i in 0 until parts.size - 1) {
             if (parts[i] == parts[i + 1])
                 return res
-            else res += parts[i].length + 1
+            res += parts[i].length + 1
+        }
+    }
     return -1
 }
 
@@ -238,7 +239,8 @@ fun mostExpensive(description: String): String {
     }
     return maxPrice
 }
- /* Сложная
+
+/* Сложная
  *
  * Перевести число roman, заданное в римской системе счисления,
  * в десятичную систему и вернуть как результат.
